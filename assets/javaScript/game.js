@@ -26,30 +26,32 @@ var hangman = {
             return hangman.currentGuess; 
         }
 
-        this.currentWord = hangman.wordBank[Math.floor(Math.random() * hangman.wordBank.length)].split('');
         document.getElementById("currWord").innerHTML = '  ' + placeHolder(this.currentWord).toString().replace(/,/g, '');
 
+        this.currentWord = hangman.wordBank[Math.floor(Math.random() * hangman.wordBank.length)].split('');
+        
         console.log(hangman.currentWord)
 
-        var matchKey = function(arr) {
-            document.onkeydown = function(event){
-            hangman.userInput.push(event.key);  
+        document.onkeydown = function(event){
+        hangman.userInput.push(event.key);
+
+            var matchKey = function(arr) {
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i] === hangman.userInput[hangman.userInput.length - 1]) {
-                        hangman.currentGuess[i] = hangman.userInput[hangman.userInput.length - 1]; 
+                        var matchInput = hangman.userInput;
+                        hangman.currentGuess[i] = matchInput[matchInput.length - 1]; 
                         console.log(hangman.currentGuess)
                         document.getElementById("currWord").innerHTML = '  ' + hangman.currentGuess.toString().replace(/,/g, ''); 
                     } 
                 }
             }
-        }
-        matchKey(hangman.currentWord); 
+            
+            matchKey(hangman.currentWord); 
 
-        var appendToLG = function(arr) {
-            document.onkeydown = function(event){
-                hangman.userInput.push(event.key);
+            var appendToLG = function(arr) {
                 for (var i = 0; i < arr.length; i++) {
-                    if (!arr[i] == hangman.userInput[hangman.userInput.length - 1]) {
+                    if (arr[i] !== hangman.userInput[hangman.userInput.length - 1]) {
+                        var appendInput = hangman.userInput;
                         hangman.lettersGuessed.push(hangman.userInput[hangman.userInput.length - 1])
                         console.log(hangman.lettersGuessed)
                         document.getElementById("lettersGuessed").innerHTML = '  ' + hangman.lettersGuessed.toString(); 
@@ -57,38 +59,35 @@ var hangman = {
                     } 
                 }
             }
-        }
-        appendToLG(hangman.currentGuess); 
+            appendToLG(hangman.currentGuess); 
 
-        var decRemGuesses = function(arr) {
-            document.onkeydown = function(event){
-            hangman.userInput.push(event.key);   
+            var decRemGuesses = function(arr) {
+                var decInput = hangman.userInput; 
                 for (var i = 0; i < arr.length; i++) {
-                    if (arr[i] != hangman.userInput[hangman.userInput.length - 1]) {
+                    if (arr[i] !== decInput[decInput - 1]) {
                         hangman.remGuesses--  
                         console.log(hangman.remGuesses)
                         document.getElementById("remGuesses").innerHTML = '  ' + hangman.remGuesses;
                         break; 
                     }
                 }
+                
             }
-        }
-        decRemGuesses(hangman.currentGuess); 
+            decRemGuesses(hangman.currentGuess); 
 
-        var incWins = function (arr) {
-            document.onkeydown = function(event){
-                hangman.userInput.push(event.key);   
-                    for (var i = 0; i < arr.length; i++) {
-                        if (arr[i] != hangman.userInput[hangman.userInput.length - 1]) {
-                            hangman.Wins++  
-                            console.log(hangman.Wins)
-                            document.getElementById("wins").innerHTML = '  ' + hangman.Wins; 
-                            break; 
-                        }
+            var incWins = function (arr) {
+                var incInput = hangman.userInput; 
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i] != incInput[incInput.length - 1]) {
+                        hangman.Wins++  
+                        console.log(hangman.Wins)
+                        document.getElementById("wins").innerHTML = '  ' + hangman.Wins; 
+                        break; 
                     }
                 }
-         }
-         incWins(hangman.currentGuess)
+            }
+            incWins(hangman.currentGuess)
+        }    
     }
 }
 
