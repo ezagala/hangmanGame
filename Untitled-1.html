@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Professional Bull Riding Hangman</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/hangman-style.css" -->
+</head>
+<body>
+  <div class="jumbotron">
+    
+    <h1 class="text-center">CLIMB ON TOP OF THAT BULL!</h1>
+    <div id="game" class="text-center">
+        
+        <div>
+        <p id="w"> Wins: </p>
+        </div>  
+        <p id="l"> Loss: </p>
+        <p id="letters"> Letters Guessed:</p>
+        
+    </div>
+  </div>
+<div >
+    <h2>HOLD ON TIGHT!</h2>
+    <ul id="underscore" class="underscore">
+    </ul>
+</div>
+  <h1 class="text-center" id="random-number"></h1>
+<script>
+ 
+var compChoices= ['dillinger', 'bodacious', 'bushwacker', 'tohanta', 'yellowjacket', 'durango', 'cochise'];
+var compWord;
+var currentWord=[];
+var compWordLetters=[];
+var playerLetters= [];
+var wins= 0;
+var loss= 0;
+var guessesLeft= 7;
+  
+   
+function setup() {
+    guessesLeft = 7
+    letterGuess = [];
+    compWordLetters =[];
+    
+// 1.Comp picks a random word from array
+    compWord = compChoices[Math.floor(Math.random() * compChoices.length)];
+// 2. break compWord into letters
+    compWordLetters = compWord.split('');
+// 3. add underscores for number of letters
+    //for loop that itterates throught the number of letters
+    for (var i = 0; i < compWordLetters.length; i++) {
+    // make a list to hold underscores
+        var underList = document.createElement('li');
+    // create the underscore 
+        var underscore = document.createTextNode('_');
+    // append the item
+        underList.append(underscore);
+    //make it visible to the world 
+        document.getElementById('underscore').append(underList);
+    }
+    
+};
+//functions for everythign that workswithin the game 
+function inGame() {
+//user guess on key up, push, and display letters in the browser
+    document.onkeyup = function(event) {
+        var userGuess = event.key;
+        playerLetters.push(userGuess);
+        document.getElementById('letters').innerHTML = 'Letters Guessed: ' + playerLetters;
+        }
+    // actions taken when guessed correctly
+    function guess() {
+        var underList2 = document.getElementById('underscore');
+        // Get an array of those list items so we can loop though and replace the _ with the userGuess
+        var underscoreItems = underList.getElementsByTagName('li');
+        // for loop for cycling word and test if user guess was the same as the computer word letter
+        for (var j = 0; j < compWordLetters.length; j++) {
+            if (compWordLetters[i] === userGuess) {
+                underscoreItems[i].innerHTML = userGuess;
+            } else if (compWordLetters[i] !== userGuess) {
+                guessesLeft--;
+            
+                // winningMatch[i] = userGuess;
+            }
+        }
+    }
+};
+setup()
+console.log(compWord);
+console.log(compWordLetters);
+console.log(guessesLeft);
+inGame();
+console.log(guessesLeft);
+</script>
+<p></p>
+</body>
+</html>
